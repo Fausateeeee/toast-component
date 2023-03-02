@@ -4,11 +4,18 @@ import Button from "../Button";
 
 import styles from "./ToastPlayground.module.css";
 
+import Toast from "../Toast";
+
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 
 function ToastPlayground() {
   const [currentVariant, setVariant] = React.useState("notice");
   const [message, setMessage] = React.useState("");
+  const [toastStatus, setToastStatus] = React.useState(false);
+
+  function handleToastVisibility() {
+    setToastStatus((toast) => !toast);
+  }
   return (
     <div className={styles.wrapper}>
       <header>
@@ -16,6 +23,13 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
+      {toastStatus && (
+        <Toast
+          message={message}
+          variant={currentVariant}
+          handleClick={handleToastVisibility}
+        />
+      )}
       <div className={styles.controlsWrapper}>
         <div className={styles.row}>
           <label
@@ -55,11 +69,10 @@ function ToastPlayground() {
             })}
           </div>
         </div>
-
         <div className={styles.row}>
           <div className={styles.label} />
           <div className={`${styles.inputWrapper} ${styles.radioWrapper}`}>
-            <Button>Pop Toast!</Button>
+            <Button onClick={handleToastVisibility}>Pop Toast!</Button>
           </div>
         </div>
       </div>

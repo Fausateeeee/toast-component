@@ -18,8 +18,12 @@ function ToastProvider({ children }) {
 
     setToasts(nextToastList);
   };
+
+  const RemoveAll = () => {
+    setToasts([]);
+  };
   return (
-    <ToastContext.Provider value={{ toasts, AddToast, RemoveToast }}>
+    <ToastContext.Provider value={{ toasts, AddToast, RemoveToast, RemoveAll }}>
       {children}
     </ToastContext.Provider>
   );

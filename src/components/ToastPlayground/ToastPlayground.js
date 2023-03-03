@@ -7,13 +7,16 @@ import styles from "./ToastPlayground.module.css";
 import ToastShelf from "../ToastShelf";
 
 import { ToastContext } from "../ToastProvider/ToastProvider";
-
+import useEscapeKey from "../../hooks/UseEscapeKey";
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 
 function ToastPlayground() {
-  const { AddToast } = React.useContext(ToastContext);
+  const { AddToast, RemoveAll } = React.useContext(ToastContext);
   const [variant, setVariant] = React.useState("notice");
   const [message, setMessage] = React.useState("");
+  const textAreaRef = React.useRef();
+
+  useEscapeKey(RemoveAll);
 
   function handleSubmitToast(event) {
     event.preventDefault();
@@ -22,6 +25,7 @@ function ToastPlayground() {
 
     setVariant("notice");
     setMessage("");
+    textAreaRef.current.focus();
   }
   return (
     <div className={styles.wrapper}>
@@ -42,6 +46,7 @@ function ToastPlayground() {
           </label>
           <div className={styles.inputWrapper}>
             <textarea
+              ref={textAreaRef}
               id="message"
               className={styles.messageInput}
               value={message}
